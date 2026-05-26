@@ -40,9 +40,33 @@ By default, the app expects a PostgreSQL database with these settings:
 
 The table is created automatically on startup if it does not already exist.
 
+### Create the Database
+
+If you do not already have the database, create it in PostgreSQL:
+
+```powershell
+createdb -U postgres bug_tracker
+```
+
 ### Customizing the Database Connection
 
-Update the connection details in `src/main/java/util/DBUtil.java` if you use a different host, port, database name, or credentials.
+The application now supports environment variables or Maven system properties.
+
+#### Using environment variables
+
+```powershell
+$env:BUG_TRACKER_DB_URL = "jdbc:postgresql://localhost:5432/bug_tracker"
+$env:BUG_TRACKER_DB_USER = "postgres"
+$env:BUG_TRACKER_DB_PASSWORD = "password"
+```
+
+#### Using Maven system properties
+
+```powershell
+mvn clean compile exec:java -Ddb.url=jdbc:postgresql://localhost:5432/bug_tracker -Ddb.user=postgres -Ddb.password=password
+```
+
+If you prefer, update the default values in `src/main/java/util/DBUtil.java`.
 
 ## Build and Run
 
